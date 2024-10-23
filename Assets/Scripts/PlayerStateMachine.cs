@@ -24,9 +24,20 @@ public class PlayerStateMachine : MonoBehaviour
             currentState.Update();
         }
     }
+    private void FixedUpdate()
+    {
+        if (currentState != null)
+        {
+            currentState.FixedUpdate();
+        }
+    }
 
     public void TransitionToState(PlayerState newState)
     {
+        if (currentState?.GetType()== newState.GetType())
+        {
+            return;
+        }
         currentState?.Exit();
         currentState = newState;
         currentState.Enter();
