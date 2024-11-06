@@ -30,7 +30,7 @@ public abstract class PlayerState
             {
                 stateMachine.TransitionToState(new JumpingState(stateMachine));
             }
-            else if (Input.GetAxis("Horizntal") != 0 || Input.GetAxis("Vertical") != 0)
+            else if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 stateMachine.TransitionToState(new MoveingState(stateMachine));
             }
