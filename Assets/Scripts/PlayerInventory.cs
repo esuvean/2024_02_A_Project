@@ -9,28 +9,70 @@ public class PlayerInventory : MonoBehaviour
     public int bushCount = 0;
     public int treeCount = 0;
 
-    public void AddIten(ItemType itemType)
+    public void AddItem(ItemType itemType, int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            AddItem(itemType);
+        }
+    }
+
+    public void RemoveItem(ItemType itemType, int amount = 1)
     {
         switch(itemType)
         {
             case ItemType.Crystal:
-                crystalCount++;
-                Debug.Log($"크리스탈 획득 ! 현재 개수 : {crystalCount}");
+                if (crystalCount >= amount)
+                {
+                    crystalCount -= amount;
+                    Debug.Log($"크리스탈 {amount} 사용 ! 현재 개수 : {crystalCount}");
+                    return true;
+                }
                 break;
             case ItemType.Plant:
-                plantCount++;
-                Debug.Log($"크리스탈 획득 ! 현재 개수 : {plantCount}");
+                if (plantCount >= amount)
+                {
+                    plantCount -= amount;
+                    Debug.Log($"식물 {amount} 사용 ! 현재 개수 : {plantCount}");
+                    return true;
+                }
                 break;
             case ItemType.Bush:
-                bushCount++;
-                Debug.Log($"크리스탈 획득 ! 현재 개수 : {bushCount}");
+                if (bushCount >= amount)
+                {
+                    bushCount -= amount;
+                    Debug.Log($"수풀 {amount} 사용 ! 현재 개수 : {bushCount}");
+                    return true;
+                }
                 break;
             case ItemType.Tree:
-                treeCount++;
-                Debug.Log($"크리스탈 획득 ! 현재 개수 : {treeCount}");
+                if (treeCount >= amount)
+                {
+                    treeCount -= amount;
+                    Debug.Log($"나무 {amount} 사용 ! 현재 개수 : {treeCount}");
+                    return true;
+                }
                 break;
         }
+        return false;
     }
+    public int GetItemCount(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Crystal;
+                return crystalCount;
+            case ItemType.Plant:
+                return plantCount;
+            case ItemType.Bush:
+                return bushCount;
+            case ItemType.Tree:
+                return treeCount;
+            default:
+                return 0;
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
