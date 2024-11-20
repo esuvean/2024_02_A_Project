@@ -1,13 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    private SurvivalStats survivalStats;
+
     public int crystalCount = 0;
     public int plantCount = 0;
     public int bushCount = 0;
     public int treeCount = 0;
+
+    public void Start()
+    {
+        survivalStats = GetComponent<SurvivalStats>();
+    }
+    public void UseItem(ItemType itemType)
+    {
+        if (GetItemCount(itemType) <= 0)
+        {
+            return;
+        }
+        switch (itemType)
+        {
+            case ItemType.VeagetableStew:
+                RemoveItem(ItemType.VeagetableStew,1);
+                survivalStats.EatFood(RecipeList.KitchenRecipes[0].hungerRestoreAmount);
+                break;
+            case ItemType.FruitSalad:
+                RemoveItem(ItemType.FruitSalad, 1);
+                survivalStats.EatFood(RecipeList.KitchenRecipes[0].hungerRestoreAmount);
+                break;
+            case ItemType.RepairKit:
+                RemoveItem(ItemType.RepairKit, 1);
+                survivalStats.EatFood(RecipeList.KitchenRecipes[0].hungerRestoreAmount);
+                break;
+        }
+    }
 
     public void AddItem(ItemType itemType, int amount)
     {
@@ -17,7 +47,12 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void RemoveItem(ItemType itemType, int amount = 1)
+    private void AddItem(ItemType itemType)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool RemoveItem(ItemType itemType, int amount = 1)
     {
         switch(itemType)
         {
@@ -56,11 +91,12 @@ public class PlayerInventory : MonoBehaviour
         }
         return false;
     }
+
     public int GetItemCount(ItemType itemType)
     {
         switch (itemType)
         {
-            case ItemType.Crystal;
+            case ItemType.Crystal:
                 return crystalCount;
             case ItemType.Plant:
                 return plantCount;

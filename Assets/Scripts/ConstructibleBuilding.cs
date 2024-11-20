@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class ConstructibleBuilding : MonoBehaviour
         }
         isConstructed = true;
 
-        if(FloatingTextMananger.instance ! = null)
+        if(FloatingTextMananger.instance != null)
         {
             FloatingTextMananger.instance.Show($"{buildingName} 건설 완료 !", transform.position + Vector3.up);
         }
@@ -57,6 +58,8 @@ public class ConstructibleBuilding : MonoBehaviour
             {
                 FloatingTextMananger.instance.Show($"{buildingName} 건설 시작 !", transform.position + Vector3.up);
             }
+
+            StartConstruction(CostructionRoutine());
         }
         else
         {
@@ -67,6 +70,12 @@ public class ConstructibleBuilding : MonoBehaviour
             }
         }
     }
+
+    private void StartConstruction(IEnumerator enumerator)
+    {
+        throw new NotImplementedException();
+    }
+
     // Update is called once per frame
     void Update()
     {
