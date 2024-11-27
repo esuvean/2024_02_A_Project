@@ -13,7 +13,7 @@ public class CollectibleItem : MonoBehaviour
     {
         if (!canCollect) return;
 
-        inventory.AddItem(itemType);
+        inventory.AddItem(itemType , 1);
 
         if (FloatingTextMananger.instance != null)
         {

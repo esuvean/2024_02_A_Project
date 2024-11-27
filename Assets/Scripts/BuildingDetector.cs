@@ -8,6 +8,7 @@ public class BuildingDetector : MonoBehaviour
     public Vector3 lastPostion;
     public float moveThreshold = 0.1f;
     public ConstructibleBuilding currentNearbyBuilding;
+    public BuildingCrafter currenBuildingCrafter;
 
     private void CheckForBuilding()
     {
@@ -15,6 +16,7 @@ public class BuildingDetector : MonoBehaviour
 
         float closestDistance = float.MaxValue;
         ConstructibleBuilding closestBuilding = null;
+        BuildingCrafter closesCrafter = null;
 
         foreach (Collider collier in hitColliders)
         {
@@ -22,16 +24,19 @@ public class BuildingDetector : MonoBehaviour
             if (building != null && building.canBuild && !building.isConstructed)
             {
                 float distance = Vector3.Distance(transform.position, building.transform.position);
-                if (distance > closestDistance)
+                if (building != null)
                 {
                     closestDistance = distance;
                     closestBuilding = building;
+                    closesCrafter = building.GetComponent<BuildingCrafter>();
                 }
             } 
             if(closestBuilding != currentNearbyBuilding)
             {
                 currentNearbyBuilding = closestBuilding;
-                if (currentNearbyBuilding != null)
+                currenBuildingCrafter = closesCrafter;
+
+                if (currentNearbyBuilding != null && !currentNearbyBuilding.isConstructed)
                 {
                     if (FloatingTextMananger.instance != null)
                     {
@@ -64,7 +69,15 @@ public class BuildingDetector : MonoBehaviour
 
         if (currentNearbyBuilding != null && Input.GetKeyDown(KeyCode.F))
         {
-            currentNearbyBuilding.StartConstruction(GetComponent<PlayerInventory>());
+            if (!currentNearbyBuilding.isConstructed)
+            {
+                currentNearbyBuilding.StartConstruction(GetComponent<PlayerInventory>());
+            }
+            else if(currenBuildingCrafter != null)
+            {
+                Debug.Log($"{currentNearbyBuilding.buildingName} 의 제작 메뉴 열기");
+                CraftingUIManager.Instance?.ShowUI(currenBuildingCrafter);
+            }
         } 
     }
 }
