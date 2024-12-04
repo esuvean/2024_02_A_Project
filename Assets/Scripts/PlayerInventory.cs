@@ -12,6 +12,10 @@ public class PlayerInventory : MonoBehaviour
     public int bushCount = 0;
     public int treeCount = 0;
 
+    public int vegetableStewCount = 0;
+    public int fruitSaledCount = 0;
+    public int repairKitCount = 0;
+
     public void Start()
     {
         survivalStats = GetComponent<SurvivalStats>();
@@ -88,6 +92,30 @@ public class PlayerInventory : MonoBehaviour
                     return true;
                 }
                 break;
+            case ItemType.VeagetableStew:
+                if (vegetableStewCount >= amount)
+                {
+                    vegetableStewCount -= amount;
+                    Debug.Log($"나무 {amount} 사용 ! 현재 개수 : {vegetableStewCount}");
+                    return true;
+                }
+                break;
+            case ItemType.FruitSalad:
+                if (fruitSaledCount >= amount)
+                {
+                    fruitSaledCount -= amount;
+                    Debug.Log($"나무 {amount} 사용 ! 현재 개수 : {fruitSaledCount}");
+                    return true;
+                }
+                break;
+            case ItemType.RepairKit:
+                if (repairKitCount >= amount)
+                {
+                    repairKitCount -= amount;
+                    Debug.Log($"나무 {amount} 사용 ! 현재 개수 : {repairKitCount}");
+                    return true;
+                }
+                break;
         }
         return false;
     }
@@ -104,6 +132,12 @@ public class PlayerInventory : MonoBehaviour
                 return bushCount;
             case ItemType.Tree:
                 return treeCount;
+            case ItemType.VeagetableStew:
+                return vegetableStewCount;
+            case ItemType.FruitSalad:
+                return fruitSaledCount;
+            case ItemType.RepairKit:
+                return repairKitCount;
             default:
                 return 0;
         }
